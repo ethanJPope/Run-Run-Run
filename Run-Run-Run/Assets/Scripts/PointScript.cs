@@ -2,6 +2,14 @@ using UnityEngine;
 
 public class PointScript : MonoBehaviour
 {
+    public static PointScript instance;
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
     void Start()
     {
         PlayerPrefs.SetInt("Points", 0);
