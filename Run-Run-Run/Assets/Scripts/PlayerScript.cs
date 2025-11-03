@@ -20,48 +20,59 @@ public class PlayerScript : MonoBehaviour
 
     void Update()
     {
+        HandleMovement();
+        HandleJump();
+        LookDown();
+        UpdateAnimations();
+    }
 
+    private void HandleMovement()
+    {
         float moveInput = Input.GetAxis("Horizontal");
-        var jumpInputReleased = Input.GetKeyUp(KeyCode.Space);
         rb.linearVelocity = new Vector2(moveInput * 10f, rb.linearVelocity.y);
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
-        {
-            rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
-        }
-        if(jumpInputReleased && rb.linearVelocity.y > 0f)
-        {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0);
-        }
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            followPoint.localPosition = new Vector3(0f, -5f, 0f);
-        }
-        else
-        {
-            followPoint.localPosition = new Vector3(0f, 0f, 0f);
-        }
-        if (!isGrounded)
-        {
-            animator.SetBool("isGrounded", false);
-        }
-        else
-        {
-            animator.SetBool("isGrounded", true);
-        }
+
         if (moveInput > 0 && isGrounded)
         {
             spriteRenderer.flipX = false;
-            animator.SetBool("isRunning", true);
         }
         else if (moveInput < 0 && isGrounded)
         {
             spriteRenderer.flipX = true;
-            animator.SetBool("isRunning", true);
+        }
+    }
+
+    private void HandleJump()
+    {
+        bool jumpPressed = Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow);
+        bool jumpReleased = Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.UpArrow);
+
+        if (jumpPressed && isGrounded)
+        {
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        }
+        
+        if(jumpReleased && rb.linearVelocity.y > 0)
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
+        }
+    }
+
+    private void LookDown()
+    {
+        if(Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
+        {
+            followPoint.localPosition = new Vector3(0, -5, 0);
         }
         else
         {
-            animator.SetBool("isRunning", false);
+            followPoint.localPosition = new Vector3(0, 0, 0);
         }
+    }
+
+    private void UpdateAnimations()
+    {
+        animator.SetBool("isGrounded", isGrounded);
+        animator.SetBool("isRunning", Mathf.Abs(rb.linearVelocity.x) > 0.1f && isGrounded);
     }
 
     private void OnTriggerEnter2D(Collider2D other)

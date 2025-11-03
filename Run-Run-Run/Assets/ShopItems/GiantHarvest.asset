@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32612e2d0cebe8741b204ba14b8e31bb, type: 3}
+  m_Name: GiantHarvest
+  m_EditorClassIdentifier: 
+  itemName: Giant Harvest
+  price: 25
+  icon: {fileID: 8572515142372765739, guid: 7ea315b16c834a44aafb067183a01764, type: 3}
+  itemDescription: You can press the 'x' key to make the pumkins you collect worth
+    10 instead of 5.

@@ -25,10 +25,21 @@ public class ShopManager : MonoBehaviour
     }
     void BuyItem(ShopItem item)
     {
-        if (pumpkins >= item.price)
+        if (PlayerManager.instance.HasItem(item.itemName))
         {
-            pumpkins -= item.price;
-            Debug.Log($"Bought {item.itemName}");
+            Debug.Log($"{item.itemName} already purchased!");
+            return;
+        }
+
+        if (PlayerManager.instance.data.pumpkins >= item.price)
+        {
+            PlayerManager.instance.SpendPumpkins(item.price);
+            PlayerManager.instance.AddItem(item.itemName);
+            Debug.Log($"Purchased {item.itemName} for {item.price}");
+        }
+        else
+        {
+            Debug.Log("Not enough pumpkins!");
         }
     }
     public void ToggleShop(bool isOpen)
