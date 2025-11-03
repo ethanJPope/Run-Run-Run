@@ -2,18 +2,16 @@ using UnityEngine;
 
 public class PumpkinScript : MonoBehaviour
 {
-    [SerializeField] private GameObject pointController;
-    void Start()
-    {
-
-    }
+    [SerializeField] private int pumpkinValue = 1;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (PlayerManager.instance != null)
         {
-            PointScript.instance.AddPoints(1); 
-            Destroy(gameObject);
+            PlayerManager.instance.AddPumkins(pumpkinValue);
+            Debug.Log($"Collected {pumpkinValue} pumpkin(s)! Total: {PlayerManager.instance.data.pumpkins}");
         }
+
+        Destroy(gameObject);
     }
 }

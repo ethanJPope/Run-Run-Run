@@ -5,12 +5,15 @@ using System.Data.Common;
 
 public class PlayerScript : MonoBehaviour
 {
+    [SerializeField] private float moveSpeed = 10f;
     [SerializeField] private float jumpForce = 8f;
+    [SerializeField] private int maxJumps = 1;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Transform followPoint;
     private Rigidbody2D rb;
     private Animator animator;
     private bool isGrounded = true;
+    private int jumpCount = 0;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -29,7 +32,7 @@ public class PlayerScript : MonoBehaviour
     private void HandleMovement()
     {
         float moveInput = Input.GetAxis("Horizontal");
-        rb.linearVelocity = new Vector2(moveInput * 10f, rb.linearVelocity.y);
+        rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
 
         if (moveInput > 0 && isGrounded)
         {
@@ -46,20 +49,31 @@ public class PlayerScript : MonoBehaviour
         bool jumpPressed = Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow);
         bool jumpReleased = Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.UpArrow);
 
-        if (jumpPressed && isGrounded)
+        if (jumpPressed && jumpCount < maxJumps)
         {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0);
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            jumpCount++;
         }
-        
-        if(jumpReleased && rb.linearVelocity.y > 0)
+
+        if (jumpReleased && rb.linearVelocity.y > 0)
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0);
+        }
+
+        if (PlayerManager.instance != null && PlayerManager.instance.data.ownedItems.Contains("DoubleJump"))
+        {
+            maxJumps = 2;
+        }
+        else
+        {
+            maxJumps = 1;
         }
     }
 
     private void LookDown()
     {
-        if(Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
         {
             followPoint.localPosition = new Vector3(0, -5, 0);
         }
@@ -79,6 +93,7 @@ public class PlayerScript : MonoBehaviour
     {
         if (other.CompareTag("Ground"))
         {
+            jumpCount = 0;
             isGrounded = true;
         }
     }

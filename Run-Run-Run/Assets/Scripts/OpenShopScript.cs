@@ -10,6 +10,14 @@ public class OpenShopScript : MonoBehaviour
         {
             shopManager.ToggleShop(true);
         }
+        if(shopManager.IsShopOpen() && Input.GetKeyDown(KeyCode.Escape))
+        {
+            shopManager.ToggleShop(false);
+        }
+        else if (shopManager.IsShopOpen() && Input.GetKeyDown(KeyCode.E))
+        {
+            shopManager.ToggleShop(false);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D collision)

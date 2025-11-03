@@ -47,4 +47,8 @@ public class ShopManager : MonoBehaviour
         shopUI.SetActive(isOpen);
         Time.timeScale = isOpen ? 0f : 1f;
     }
+    public bool IsShopOpen()
+    {
+        return shopUI.activeSelf;
+    }
 }
