@@ -9,12 +9,9 @@ public class OpenShopScript : MonoBehaviour
         if (isPlayerNearby && Input.GetKeyDown(KeyCode.E))
         {
             shopManager.ToggleShop(true);
+            return;
         }
         if(shopManager.IsShopOpen() && Input.GetKeyDown(KeyCode.Escape))
-        {
-            shopManager.ToggleShop(false);
-        }
-        else if (shopManager.IsShopOpen() && Input.GetKeyDown(KeyCode.E))
         {
             shopManager.ToggleShop(false);
         }
@@ -33,7 +30,6 @@ public class OpenShopScript : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             isPlayerNearby = false;
-            shopManager.ToggleShop(false);
         }
     }
 }

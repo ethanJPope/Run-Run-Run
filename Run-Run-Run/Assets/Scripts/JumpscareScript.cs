@@ -7,12 +7,14 @@ public class JumpscareScript : MonoBehaviour
     [SerializeField] private float maxJumpscareDelay = 30f;
     [SerializeField] private float jumpscareFadeDuration = 1.5f;
     [SerializeField] private AudioClip jumpscareSound;
+    private Rigidbody2D playerRb;
     private Transform cameraTransform;
     private Transform currentTransform;
     void Start()
     {
         cameraTransform = Camera.main.transform;
         currentTransform = GetComponent<Transform>();
+        playerRb = GameObject.FindWithTag("Player").GetComponent<Rigidbody2D>();
         if (jumpscareSpriteRenderer != null)
         {
             Color color = jumpscareSpriteRenderer.color;
@@ -45,6 +47,11 @@ public class JumpscareScript : MonoBehaviour
         float elapsed = 0f;
         Color c = sr.color;
         SoundEffectsManager.instance.PlaySound(jumpscareSound, currentTransform, 1f);
+        
+        if (playerRb != null && playerRb.linearVelocity.magnitude > 0f)
+        {
+            playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, 0f);
+        }
         
         while (elapsed < duration)
         {

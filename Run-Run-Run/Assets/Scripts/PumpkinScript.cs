@@ -8,7 +8,7 @@ public class PumpkinScript : MonoBehaviour
     {
         if (PlayerManager.instance != null)
         {
-            PlayerManager.instance.AddPumkins(pumpkinValue);
+            PlayerManager.instance.AddPumpkins(pumpkinValue);
             Debug.Log($"Collected {pumpkinValue} pumpkin(s)! Total: {PlayerManager.instance.data.pumpkins}");
         }
 

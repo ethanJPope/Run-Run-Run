@@ -6,5 +6,6 @@ public class PlayerData
 {
     public int pumpkins;
     public List<string> ownedItems;
+    public float bestTime = Mathf.Infinity;
 
 }
