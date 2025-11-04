@@ -1,5 +1,5 @@
 # Run Run Run
-A fun and easy to play 2d platformer where your goal is to make it to the end. This game was fully made in Unity, my favorite way to make games. Most of the art was created by me. The parts not created by me were just assets I had bought in the past in huge bundel sales.
+A fun and easy to play 2d platformer where your goal is to make it to the end with the best time. But watch out for the jumpscares. This game was fully made in Unity, my favorite way to make games. Most of the art was created by me. The parts not created by me were just assets I had bought in the past in huge bundel sales.
 
 ## My Proccess for creating this game:
 1. Come up with an idea:
